@@ -2,12 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Catalog.Infrastructure.DependencyInjections;
+namespace Catalog.Infrastructure.DependencyInjection;
 
-public static class ServiceRegistration
+public static class InfrastructureServiceRegistration
 {
-   public static IServiceCollection ConfigureMongoDbSettings(this IServiceCollection services, IConfiguration configuration)
+   public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+      IConfiguration configuration)
    {
+      //register Database configuration as Option pattern
       services
          .AddOptions<DatabaseSettings>()
          .BindConfiguration("DatabaseSettings")

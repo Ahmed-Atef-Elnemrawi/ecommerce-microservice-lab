@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data.Contexts;
 
-public class ProductBrandContextSeed
+public static class ProductBrandContextSeed
 {
   public static async Task SeedDataAsync(IMongoCollection<ProductBrand> productBrandCollection)
   {

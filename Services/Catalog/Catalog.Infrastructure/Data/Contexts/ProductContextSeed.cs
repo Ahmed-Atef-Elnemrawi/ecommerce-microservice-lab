@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data.Contexts;
 
-public class ProductContextSeed
+public static class ProductContextSeed
 {
   public static async Task SeedDataAsync(IMongoCollection<Product> productCollection)
   {
@@ -26,33 +26,5 @@ public class ProductContextSeed
     //Insert Data into ProductBrandCollection
     if (products?.Any() is true)
       await productCollection.InsertManyAsync(products);
-  }
-}
-
-public class SelectionSort
-{
-  public int[] Sort(int[] items)
-  {
-    for (int i = 0; i < items.Length-1; i++)
-    {
-      //assume the current hold the minimum value
-      //the fist loop is used select the current value
-      var minIndex = i;
-
-      //The inner one is used for comparison
-      for (int j = i + 1; j < items.Length; j++)
-      {
-         if (items[minIndex] < items[j]) continue;
-          minIndex = j;
-
-      }
-
-      //swapping
-      var temp = items[i];
-      items[minIndex] = temp;
-      items[i] =  items[minIndex];
-    }
-
-    return items;
   }
 }
