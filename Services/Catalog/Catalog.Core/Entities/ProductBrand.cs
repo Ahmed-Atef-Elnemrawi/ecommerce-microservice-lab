@@ -2,5 +2,6 @@
 
 public class ProductBrand : BaseEntity
 {
-  public required string Name { get; set; }
+  public string Name { get; private set; } = null!;
+
 }

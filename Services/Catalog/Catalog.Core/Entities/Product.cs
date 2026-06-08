@@ -5,13 +5,13 @@ namespace Catalog.Core.Entities;
 
 public class Product : BaseEntity
 {
-  public required string Name { get; set; }
-  public required string Description { get; set; }
-  public required string Summary { get; set; }
+  public string Name { get; private set; } = null!;
+  public string Description { get; private set; } = null!;
+  public string Summary { get; private set; } = null!;
 
   [BsonRepresentation(BsonType.Decimal128)]
-  public decimal Price { get; set; }
+  public decimal Price { get; private set; }
 
-  public required ProductBrand Brand { get; set; }
-  public required ProductType  Type { get; set; }
+  public ProductBrand Brand { get; private set; } = null!;
+  public ProductType Type { get; private set; } = null!;
 }
