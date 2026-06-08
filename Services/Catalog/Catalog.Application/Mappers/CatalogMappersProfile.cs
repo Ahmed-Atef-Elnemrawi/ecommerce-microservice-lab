@@ -9,5 +9,7 @@ public class CatalogMappersProfile : Profile
    public CatalogMappersProfile()
    {
       CreateMap<ProductBrand, ProductBrandDto>().ReverseMap();
+      CreateMap<Product, ProductDto>().ReverseMap();
+      CreateMap<ProductType, ProductTypeDto>().ReverseMap();
    }
 }
