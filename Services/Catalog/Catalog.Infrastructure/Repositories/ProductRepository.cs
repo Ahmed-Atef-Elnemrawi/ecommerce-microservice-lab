@@ -1,7 +1,6 @@
 ﻿using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data.Contexts;
-using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
