@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerGen(options =>
 {
   options.SwaggerDoc("v1", new OpenApiInfo
