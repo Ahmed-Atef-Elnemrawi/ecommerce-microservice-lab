@@ -15,7 +15,7 @@ public class GetAllProductBrandsQueryHandler(IProductBrandRepository productBran
   public async Task<IList<ProductBrandDto>> Handle(GetAllProductBrandsQuery request,
     CancellationToken cancellationToken)
   {
-    var brands = await _productBrandRepository.GetAllProductBrands();
+    var brands = await _productBrandRepository.GetAllProductBrands(cancellationToken);
     var brandsListDto = _mapper.Map<IList<ProductBrandDto>>(brands);
     return brandsListDto;
   }

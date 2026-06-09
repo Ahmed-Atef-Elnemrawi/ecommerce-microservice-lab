@@ -4,5 +4,5 @@ namespace Catalog.Core.Repositories;
 
 public interface IProductTypeRepository
 {
-  public Task<IEnumerable<ProductType>> GetAllProductTypes();
+  public Task<IEnumerable<ProductType>> GetAllProductTypes(CancellationToken cancellationToken);
 }

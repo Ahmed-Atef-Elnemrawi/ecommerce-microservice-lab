@@ -14,7 +14,7 @@ public class GetAllProductQueryHandler(IProductRepository productRepository, IMa
 
   public async Task<IList<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
   {
-    var productList = await _productRepository.GetAllProducts();
+    var productList = await _productRepository.GetAllProducts(cancellationToken);
     var  productListDto = _mapper.Map<IList<ProductDto>>(productList);
 
     return productListDto;
