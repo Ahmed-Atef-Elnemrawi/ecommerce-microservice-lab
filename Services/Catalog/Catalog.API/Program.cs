@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
-using Catalog.Infrastructure.DependencyInjection;
+using Catalog.Application.ServiceRegistration;
+using Catalog.Infrastructure.ServiceRegistration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,7 +10,7 @@ using Microsoft.OpenApi;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerGen(options =>
 {
