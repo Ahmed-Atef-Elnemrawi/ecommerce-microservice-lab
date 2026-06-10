@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Asp.Versioning;
 using Catalog.Application.ServiceRegistration;
 using Catalog.Infrastructure.ServiceRegistration;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddApiVersioning(options =>
+{
+  options.ReportApiVersions = true;
+  options.AssumeDefaultVersionWhenUnspecified = true;
+  options.DefaultApiVersion = new ApiVersion(1, 0);
+  options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
 builder.Services.AddSwaggerGen(options =>
 {
   options.SwaggerDoc("v1", new OpenApiInfo
