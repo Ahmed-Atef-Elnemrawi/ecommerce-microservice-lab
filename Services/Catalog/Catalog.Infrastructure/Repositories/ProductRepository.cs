@@ -15,12 +15,12 @@ public class ProductRepository(ICatalogContext context)
     return await _context.Products.Find(p => true).ToListAsync(cancellationToken);
   }
 
-  public async Task<Product> GetProductById(string id, CancellationToken cancellationToken)
+  public async Task<Product?> GetProductById(string id, CancellationToken cancellationToken)
   {
     return await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
   }
 
-  public async Task<IEnumerable<Product>> GetAllProductsByName(string name, CancellationToken cancellationToken)
+  public async Task<IEnumerable<Product>> SearchProductsByName(string name, CancellationToken cancellationToken)
   {
     return await _context.Products.Find(p => p.Name == name).ToListAsync(cancellationToken);
   }
