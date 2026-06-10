@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Catalog.Application.Queries;
 
-public record GetProductByNameQuery(string Name) : IRequest<IList<ProductDto>>;
+public record SearchProductsByNameQuery(string Name) : IRequest<IList<ProductDto>>;
