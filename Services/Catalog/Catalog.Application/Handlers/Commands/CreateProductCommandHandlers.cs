@@ -12,8 +12,9 @@ public class CreateProductCommandHandlers(IProductRepository productRepository, 
 {
   public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
   {
-    var productEntity = mapper.Map<Product>(request);
-    var newProduct = await productRepository.CreateProduct(productEntity, cancellationToken);
+    var productEntity = Product.Create(request.Name, request.Description, request.Summary, request.Price,
+      request.BrandId, request.TypeId);
+
     var newProduct = await productRepository.AddAsync(productEntity, cancellationToken);
     var productDto = mapper.Map<ProductDto>(newProduct);
 
