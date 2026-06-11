@@ -14,7 +14,7 @@ public class SearchProductsByNameQueryHandler(IProductRepository productReposito
 
   public async Task<IList<ProductDto>> Handle(SearchProductsByNameQuery request, CancellationToken cancellationToken)
   {
-    var product = await _productRepository.SearchProductsByName(request.Name, cancellationToken);
+    var product = await _productRepository.SearchByNameAsync(request.Name, cancellationToken);
     var  productDto = _mapper.Map<IList<ProductDto>>(product);
     return productDto;
   }

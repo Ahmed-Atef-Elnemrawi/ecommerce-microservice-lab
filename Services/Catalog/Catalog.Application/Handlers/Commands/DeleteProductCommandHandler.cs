@@ -9,7 +9,7 @@ public class DeleteProductCommandHandler(IProductRepository productRepository)
 {
   public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
   {
-      var isDeleted = await productRepository.DeleteProduct(request.ProductId, cancellationToken);
+      var isDeleted = await productRepository.DeleteAsync(request.ProductId, cancellationToken);
 
       return isDeleted;
   }

@@ -4,11 +4,11 @@ namespace Catalog.Core.Repositories;
 
 public interface IProductRepository
 {
-   Task<IEnumerable<Product>> GetAllProducts(CancellationToken cancellationToken);
-   Task<Product?> GetProductById(string id, CancellationToken cancellationToken);
-   Task<IEnumerable<Product>> SearchProductsByName(string name, CancellationToken cancellationToken);
-   Task<IEnumerable<Product>> GetAllProductsByBrand(string brand, CancellationToken cancellationToken);
-   Task<Product>  CreateProduct(Product product, CancellationToken cancellationToken);
-   Task<bool> UpdateProduct(Product product, CancellationToken cancellationToken);
-   Task<bool> DeleteProduct(string id, CancellationToken cancellationToken);
+   Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken);
+   Task<Product?> GetByIdAsync(string id, CancellationToken cancellationToken);
+   Task<IEnumerable<Product>> SearchByNameAsync(string name, CancellationToken cancellationToken);
+   Task<IEnumerable<Product>> GetByBrandAsync(string brand, CancellationToken cancellationToken);
+   Task<Product>  AddAsync(Product product, CancellationToken cancellationToken);
+   Task<bool> UpdateAsync(Product product, CancellationToken cancellationToken);
+   Task<bool> DeleteAsync(string id, CancellationToken cancellationToken);
 }
