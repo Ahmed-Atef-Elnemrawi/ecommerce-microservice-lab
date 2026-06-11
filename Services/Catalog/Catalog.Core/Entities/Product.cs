@@ -14,4 +14,29 @@ public class Product : BaseEntity
 
   public ProductBrand Brand { get; private set; } = null!;
   public ProductType Type { get; private set; } = null!;
+  public string BrandId { get; private set; }
+  public string TypeId { get; private set; }
+
+  private Product(string name, string description, string summary, decimal price, string brandId, string typeId)
+  {
+    Name = name;
+    Description = description;
+    Summary = summary;
+    Price = price;
+    BrandId = brandId;
+    TypeId = typeId;
+  }
+
+  public static Product Create(string name, string description, string summary, decimal price, string brandId,
+    string typeId)
+  {
+    if (string.IsNullOrWhiteSpace(name))
+      throw new ArgumentNullException(nameof(name), $"Product name is required");
+
+    if (price <= 0)
+      throw new ArgumentException($"Price must be greater than zero", nameof(price));
+
+
+    return new Product(name, description, summary, price, brandId, typeId);
+  }
 }

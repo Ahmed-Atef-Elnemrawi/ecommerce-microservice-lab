@@ -9,6 +9,6 @@ public record UpdateProductCommand(
   string Description,
   string Summary,
   decimal Price,
-  ProductType Type,
-  ProductBrand Brand
+  string TypeId,
+  string BrandId
   ) : IRequest<bool>;

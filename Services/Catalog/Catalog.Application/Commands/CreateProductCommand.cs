@@ -1,5 +1,4 @@
 ﻿using Catalog.Application.Responses;
-using Catalog.Core.Entities;
 using MediatR;
 
 namespace Catalog.Application.Commands;
@@ -9,5 +8,5 @@ public record CreateProductCommand(
   string Description,
   string Summary,
   decimal Price,
-  ProductType Type,
-  ProductBrand Brand) : IRequest<ProductDto>;
+  string TypeId,
+  string BrandId) : IRequest<ProductDto>;
