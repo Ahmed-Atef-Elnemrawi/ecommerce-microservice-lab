@@ -19,8 +19,8 @@ public static class InfrastructureServiceRegistration
          .ValidateOnStart();
 
       services.AddScoped<IProductRepository, ProductRepository>();
-      services.AddScoped<IProductBrandRepository, ProductRepository>();
-      services.AddScoped<IProductTypeRepository, ProductRepository>();
+      services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
+      services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
 
       services.AddScoped<ICatalogContext, CatalogContext>();
 
