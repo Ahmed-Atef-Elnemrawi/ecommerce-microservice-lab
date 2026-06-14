@@ -12,21 +12,21 @@ public class Product : BaseEntity
   [BsonRepresentation(BsonType.Decimal128)]
   public decimal Price { get; private set; }
 
-  public string BrandId { get; private set; }
-  public string TypeId { get; private set; }
+  public ProductBrand Brand { get; private set; }
+  public ProductType Type { get; private set; }
 
-  private Product(string name, string description, string summary, decimal price, string brandId, string typeId)
+  private Product(string name, string description, string summary, decimal price, ProductBrand brand, ProductType type)
   {
     Name = name;
     Description = description;
     Summary = summary;
     Price = price;
-    BrandId = brandId;
-    TypeId = typeId;
+    Brand = brand;
+    Type = type;
   }
 
-  public static Product Create(string name, string description, string summary, decimal price, string brandId,
-    string typeId)
+  public static Product Create(string name, string description, string summary, decimal price, ProductBrand brand,
+    ProductType type)
   {
     if (string.IsNullOrWhiteSpace(name))
       throw new ArgumentNullException(nameof(name), $"Product name is required");
@@ -35,6 +35,6 @@ public class Product : BaseEntity
       throw new ArgumentException($"Price must be greater than zero", nameof(price));
 
 
-    return new Product(name, description, summary, price, brandId, typeId);
+    return new Product(name, description, summary, price, brand, type);
   }
 }

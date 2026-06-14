@@ -8,5 +8,5 @@ public record CreateProductCommand(
   string Description,
   string Summary,
   decimal Price,
-  string TypeId,
-  string BrandId) : IRequest<ProductDto>;
+  ProductBrand Brand,
+  ProductType Type) : IRequest<ProductDto>;

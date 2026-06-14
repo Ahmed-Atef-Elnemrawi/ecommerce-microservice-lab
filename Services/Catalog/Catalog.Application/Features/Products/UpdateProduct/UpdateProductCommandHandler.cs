@@ -13,7 +13,7 @@ public class UpdateProductCommandHandler(IProductRepository productRepository, I
   public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
   {
     var productEntity = Product.Create(request.Name, request.Description, request.Summary, request.Price,
-      request.BrandId, request.TypeId);
+      request.Brand, request.Type);
 
     var isUpdated = await productRepository.UpdateAsync(productEntity, cancellationToken);
 
