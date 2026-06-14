@@ -1,6 +1,5 @@
-﻿using Catalog.Core.Entities;
-
-namespace Catalog.Application.Responses;
+﻿
+namespace Catalog.Application.Features.Products.Shared;
 
 public record ProductDto
 {
