@@ -1,8 +1,7 @@
-﻿using Catalog.Application.Responses;
-using Catalog.Core.Entities;
+﻿using Catalog.Core.Entities;
 using MediatR;
 
-namespace Catalog.Application.Commands;
+namespace Catalog.Application.Features.Products.UpdateProduct;
 
 public record UpdateProductCommand(
   string Name,

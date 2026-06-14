@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using Catalog.Application.Commands;
-using Catalog.Application.Responses;
-using Catalog.Core.Entities;
+﻿using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Handlers.Commands;
+namespace Catalog.Application.Features.Products.UpdateProduct;
 
-public class UpdateProductCommandHandler(IProductRepository productRepository, IMapper mapper)
+public class UpdateProductCommandHandler(IProductRepository productRepository)
   : IRequestHandler<UpdateProductCommand, bool>
 {
   public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
