@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Catalog.Application.Commands;
-using Catalog.Application.Responses;
+using Catalog.Application.Features.Products.Shared;
 using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Handlers.Commands;
+namespace Catalog.Application.Features.Products.CreateProduct;
 
 public class CreateProductCommandHandlers(IProductRepository productRepository, IMapper mapper)
   : IRequestHandler<CreateProductCommand, ProductDto>
@@ -15,9 +14,8 @@ public class CreateProductCommandHandlers(IProductRepository productRepository, 
     var entity = Product.Create(request.Name, request.Description, request.Summary, request.Price,
       request.Brand, request.Type);
 
-    var newProduct = await productRepository.AddAsync(productEntity, cancellationToken);
-    var productDto = mapper.Map<ProductDto>(newProduct);
+    var newProduct = await productRepository.AddAsync(entity, cancellationToken);
 
-    return productDto;
+    return newProduct.MapToProductDto();
   }
 }
