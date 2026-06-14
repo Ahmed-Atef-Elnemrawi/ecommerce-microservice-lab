@@ -1,8 +1,7 @@
-﻿using Catalog.Application.Commands;
-using Catalog.Core.Repositories;
+﻿using Catalog.Core.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Handlers.Commands;
+namespace Catalog.Application.Features.Products.DeleteProduct;
 
 public class DeleteProductCommandHandler(IProductRepository productRepository)
   : IRequestHandler<DeleteProductCommand, bool>
