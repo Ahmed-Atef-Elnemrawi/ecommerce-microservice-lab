@@ -1,4 +1,4 @@
-﻿namespace Catalog.Application.Responses;
+﻿namespace Catalog.Application.Features.Products.Shared;
 
 public record ProductTypeDto
 {
