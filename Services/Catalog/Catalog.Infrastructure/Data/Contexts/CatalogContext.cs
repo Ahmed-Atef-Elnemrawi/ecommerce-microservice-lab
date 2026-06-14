@@ -1,12 +1,12 @@
-﻿using Catalog.Core.Entities;
+﻿using Catalog.Application.Common.Interfaces;
+using Catalog.Core.Entities;
 using Catalog.Infrastructure.Configuration;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data.Contexts;
 
-public class CatalogContext : ICatalogContext
+public class CatalogContext : ICatalogDbContext
 {
   public IMongoCollection<Product> Products { get; }
   public IMongoCollection<ProductBrand> ProductBrands { get; }

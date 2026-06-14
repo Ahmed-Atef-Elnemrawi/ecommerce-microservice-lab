@@ -1,4 +1,5 @@
-﻿using Catalog.Core.Repositories;
+﻿using Catalog.Application.Common.Interfaces;
+using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Configuration;
 using Catalog.Infrastructure.Data.Contexts;
 using Catalog.Infrastructure.Repositories;
@@ -22,7 +23,7 @@ public static class InfrastructureServiceRegistration
       services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
       services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
 
-      services.AddScoped<ICatalogContext, CatalogContext>();
+      services.AddScoped<ICatalogDbContext, CatalogContext>();
 
       return services;
    }
