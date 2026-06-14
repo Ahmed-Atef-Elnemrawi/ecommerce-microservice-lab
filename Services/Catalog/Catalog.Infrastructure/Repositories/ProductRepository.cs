@@ -10,25 +10,25 @@ public class ProductRepository(ICatalogContext context)
 {
   private readonly ICatalogContext _context = context;
 
-  public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken)
-  {
-    return await _context.Products.Find(p => true).ToListAsync(cancellationToken);
-  }
-
-  public async Task<Product?> GetByIdAsync(string id, CancellationToken cancellationToken)
-  {
-    return await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
-  }
-
-  public async Task<IEnumerable<Product>> SearchByNameAsync(string name, CancellationToken cancellationToken)
-  {
-    return await _context.Products.Find(p => p.Name == name).ToListAsync(cancellationToken);
-  }
-
-  public async Task<IEnumerable<Product>> GetByBrandAsync(string brandId, CancellationToken cancellationToken)
-  {
-    return await _context.Products.Find(p => p.BrandId == brandId).ToListAsync(cancellationToken);
-  }
+  // public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken)
+  // {
+  //   return await _context.Products.Find(p => true).ToListAsync(cancellationToken);
+  // }
+  //
+  // public async Task<Product?> GetByIdAsync(string id, CancellationToken cancellationToken)
+  // {
+  //   return await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+  // }
+  //
+  // public async Task<IEnumerable<Product>> SearchByNameAsync(string name, CancellationToken cancellationToken)
+  // {
+  //   return await _context.Products.Find(p => p.Name == name).ToListAsync(cancellationToken);
+  // }
+  //
+  // public async Task<IEnumerable<Product>> GetByBrandAsync(string brandId, CancellationToken cancellationToken)
+  // {
+  //   return await _context.Products.Find(p => p.BrandId == brandId).ToListAsync(cancellationToken);
+  // }
 
   public async Task<Product> AddAsync(Product product, CancellationToken cancellationToken)
   {
