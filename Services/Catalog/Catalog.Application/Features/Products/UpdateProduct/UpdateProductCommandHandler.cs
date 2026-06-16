@@ -11,8 +11,17 @@ public class UpdateProductCommandHandler(
   IProductBrandRepository brandRepository)
   : IRequestHandler<UpdateProductCommand, Result<Unit>>
 {
-  public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+  public async Task<Result<Unit>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
   {
+    var typeEntity = await typeRepository.GetByIdAsync(request.TypeId, cancellationToken);
+    var brandEntity = await brandRepository.GetByIdAsync(request.BrandId, cancellationToken);
+
+    if (typeEntity is null)
+      return Result<Unit>.Failure("Type.NotExist", "Type is not found", ErrorType.NotFound);
+
+    if (brandEntity is null)
+      return Result<Unit>.Failure("Brand.NotExist", "Brand is not found", ErrorType.NotFound);
+
     var productEntity = Product.Create(request.Name, request.Description, request.Summary, request.Price,
       brandEntity, typeEntity);
 
