@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Catalog.Application.Common.Interfaces;
+using Catalog.Application.Common.Models;
 using Catalog.Application.Features.Products.Shared;
 using MediatR;
 using MongoDB.Driver;
@@ -9,7 +10,7 @@ namespace Catalog.Application.Features.Products.GetProductsByBrand;
 
 public class GetProductsByBrandQueryHandler(
   ICatalogDbContext dbContext)
-  : IRequestHandler<GetProductsByBrandQuery, IList<ProductDto>>
+  : IRequestHandler<GetProductsByBrandQuery, Result<IList<ProductDto>>>
 {
   // private readonly IProductBrandRepository _productBrandRepository = productBrandRepository;
   // private readonly IProductRepository _productRepository = productRepository;
@@ -17,7 +18,7 @@ public class GetProductsByBrandQueryHandler(
 
   private readonly ICatalogDbContext _dbContext = dbContext;
 
-  public async Task<IList<ProductDto>> Handle(GetProductsByBrandQuery request, CancellationToken cancellationToken)
+  public async Task<Result<IList<ProductDto>>> Handle(GetProductsByBrandQuery request, CancellationToken cancellationToken)
   {
     // var brand = await _productBrandRepository.GetByNameAsync(request.Name, cancellationToken);
     //
@@ -27,7 +28,9 @@ public class GetProductsByBrandQueryHandler(
     // var result = await _productRepository.GetByBrandAsync(brand.Id, cancellationToken);
     // return _mapper.Map<IList<ProductDto>>(result);
 
-    return await _dbContext.Products.AsQueryable().Where(p => p.Brand.Name == request.Name)
+    var productsDto = await _dbContext.Products.AsQueryable().Where(p => p.Brand.Name == request.Name)
       .Select(p => p.MapToProductDto()).ToListAsync(cancellationToken);
+
+    return Result<IList<ProductDto>>.Success(productsDto);
   }
 }
