@@ -1,14 +1,15 @@
-﻿using Catalog.Core.Entities;
+﻿using Catalog.Application.Common.Interfaces;
+using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data.Contexts;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
 
-public class ProductRepository(ICatalogContext context)
+public class ProductRepository(ICatalogDbContext context)
   : IProductRepository
 {
-  private readonly ICatalogContext _context = context;
+  private readonly ICatalogDbContext _context = context;
 
   // public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken)
   // {
