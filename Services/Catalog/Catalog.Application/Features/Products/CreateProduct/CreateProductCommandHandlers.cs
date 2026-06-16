@@ -15,6 +15,15 @@ public class CreateProductCommandHandlers(
 {
   public async Task<Result<ProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
   {
+    var typeEntity = await typeRepository.GetByIdAsync(request.TypeId, cancellationToken);
+    var brandEntity = await brandRepository.GetByIdAsync(request.BrandId, cancellationToken);
+
+    if (typeEntity is null)
+      return Result<ProductDto>.Failure("Type.NotExist", "Type is not found", ErrorType.NotFound);
+
+    if (brandEntity is null)
+      return Result<ProductDto>.Failure("Brand.NotExist", "Brand is not found", ErrorType.NotFound);
+
     var entity = Product.Create(request.Name, request.Description, request.Summary, request.Price,
       brandEntity, typeEntity);
 
