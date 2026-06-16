@@ -1,6 +1,7 @@
-﻿using Catalog.Application.Features.Products.Shared;
+﻿using Catalog.Application.Common.Models;
+using Catalog.Application.Features.Products.Shared;
 using MediatR;
 
 namespace Catalog.Application.Features.Products.GetProducts;
 
-public record GetProductsQuery :  IRequest<IList<ProductDto>>;
+public record GetProductsQuery :  IRequest<Result<IList<ProductDto>>>;
