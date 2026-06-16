@@ -1,15 +1,20 @@
-﻿using Catalog.Core.Repositories;
+﻿using Catalog.Application.Common.Models;
+using Catalog.Core.Repositories;
 using MediatR;
 
 namespace Catalog.Application.Features.Products.DeleteProduct;
 
 public class DeleteProductCommandHandler(IProductRepository productRepository)
-  : IRequestHandler<DeleteProductCommand, bool>
+  : IRequestHandler<DeleteProductCommand, Result<Unit>>
 {
-  public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+  public async Task<Result<Unit>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
   {
-      var isDeleted = await productRepository.DeleteAsync(request.ProductId, cancellationToken);
+    var isDeleted = await productRepository.DeleteAsync(request.ProductId, cancellationToken);
 
-      return isDeleted;
+    if (!isDeleted)
+      return Result<Unit>.Failure("Product.Delete", $"Failed to delete product  {request.ProductId}",
+        ErrorType.Failure);
+
+    return Result<Unit>.Success(Unit.Value);
   }
 }
