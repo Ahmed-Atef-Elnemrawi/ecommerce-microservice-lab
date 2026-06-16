@@ -1,4 +1,7 @@
 ﻿using System.Reflection;
+using Catalog.Application.Common.Behaviors;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.Application.ServiceRegistration;
@@ -11,6 +14,10 @@ public static class ApplicationServiceRegistration
       // {
       //    options.AddProfile<CatalogMappersProfile>();
       // });
+
+      services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+      services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
       services.AddMediatR(options =>
       {
