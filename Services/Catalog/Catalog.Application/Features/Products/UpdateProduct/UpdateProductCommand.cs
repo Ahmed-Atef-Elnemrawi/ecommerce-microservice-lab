@@ -5,6 +5,7 @@ using MediatR;
 namespace Catalog.Application.Features.Products.UpdateProduct;
 
 public record UpdateProductCommand(
+  string Id,
   string Name,
   string Description,
   string Summary,

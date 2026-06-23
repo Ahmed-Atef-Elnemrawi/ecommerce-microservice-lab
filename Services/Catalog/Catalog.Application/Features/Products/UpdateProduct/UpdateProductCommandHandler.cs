@@ -23,7 +23,7 @@ public class UpdateProductCommandHandler(
       return Result<Unit>.Failure("Brand.NotExist", "Brand is not found", ErrorType.NotFound);
 
     var productEntity = Product.Create(request.Name, request.Description, request.Summary, request.Price,
-      brandEntity, typeEntity);
+      brandEntity, typeEntity, request.Id);
 
     var isUpdated = await productRepository.UpdateAsync(productEntity, cancellationToken);
 
