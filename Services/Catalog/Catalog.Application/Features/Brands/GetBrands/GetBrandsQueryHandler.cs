@@ -1,29 +1,26 @@
-﻿using Catalog.Application.Common.Interfaces;
+﻿using AutoMapper;
+using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Common.Models;
 using Catalog.Core.Entities;
+using Catalog.Core.Repositories;
 using MediatR;
 using MongoDB.Driver;
 
 namespace Catalog.Application.Features.Brands.GetBrands;
 
-public class GetAllProductBrandsQueryHandler(ICatalogDbContext dbContext)
+public class GetAllProductBrandsQueryHandler(IProductBrandRepository brandRepository, IMapper mapper)
   : IRequestHandler<GetBrandsQuery, Result<IList<BrandDto>>>
 {
-  // private readonly IProductBrandRepository _productBrandRepository = productBrandRepository;
-  // private readonly IMapper _mapper = mapper;
+  private readonly IProductBrandRepository _productBrandRepository = brandRepository;
+  private readonly IMapper _mapper = mapper;
 
-  private readonly ICatalogDbContext _dbContext = dbContext;
+  // private readonly ICatalogDbContext _dbContext = dbContext;
 
   public async Task<Result<IList<BrandDto>>> Handle(GetBrandsQuery request, CancellationToken cancellationToken)
   {
     var filter = Builders<ProductBrand>.Filter.Empty;
 
-    var brandsDto = await  _dbContext.ProductBrands.Find(filter).Project(p => new BrandDto
-    {
-      Id = p.Id,
-      Name = p.Name
-    }).ToListAsync(cancellationToken);
-
-    return Result<IList<BrandDto>>.Success(brandsDto);
+    var brands = await _productBrandRepository.GetAllAsync(cancellationToken);
+    return Result<IList<BrandDto>>.Success(_mapper.Map<List<BrandDto>>(brands));
   }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace Catalog.Application.Features.Products.Shared;
 
-public record ProductDto
+public record struct ProductDto
 {
    public required string Id { get; init; }
    public required string Name { get; init; }

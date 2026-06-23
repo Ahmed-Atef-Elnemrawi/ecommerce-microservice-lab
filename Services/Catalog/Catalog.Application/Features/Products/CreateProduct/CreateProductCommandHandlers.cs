@@ -10,7 +10,8 @@ namespace Catalog.Application.Features.Products.CreateProduct;
 public class CreateProductCommandHandlers(
   IProductRepository productRepository,
   IProductBrandRepository brandRepository,
-  IProductTypeRepository typeRepository)
+  IProductTypeRepository typeRepository,
+  IMapper mapper)
   : IRequestHandler<CreateProductCommand, Result<ProductDto>>
 {
   public async Task<Result<ProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -29,6 +30,6 @@ public class CreateProductCommandHandlers(
 
     var newProduct = await productRepository.AddAsync(entity, cancellationToken);
 
-    return Result<ProductDto>.Success(newProduct.MapToProductDto());
+    return Result<ProductDto>.Success(mapper.Map<ProductDto>(newProduct));
   }
 }

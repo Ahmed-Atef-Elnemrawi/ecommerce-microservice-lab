@@ -1,18 +1,16 @@
-﻿using Catalog.Application.Common.Interfaces;
-using Catalog.Core.Entities;
-using Catalog.Infrastructure.Configuration;
+﻿using Catalog.Infrastructure.Configuration;
+using Catalog.Infrastructure.Documents;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data.Contexts;
 
-public class CatalogContext : ICatalogDbContext
+public class CatalogContext
 {
-  public IMongoCollection<Product> Products { get; }
-  public IMongoCollection<ProductBrand> ProductBrands { get; }
-  public IMongoCollection<ProductType> ProductTypes { get; }
+  public IMongoCollection<ProductDocument> Products { get; }
+  public IMongoCollection<BrandDocument> ProductBrands { get; }
+  public IMongoCollection<TypeDocument> ProductTypes { get; }
 
-  //TODO:register Database configuration as Option pattern
   public CatalogContext(IOptions<DatabaseSettings> options)
   {
     var db = options.Value;
@@ -20,12 +18,8 @@ public class CatalogContext : ICatalogDbContext
     var client = new MongoClient(db.ConnectionString);
     var database = client.GetDatabase(db.DatabaseName);
 
-    ProductTypes = database.GetCollection<ProductType>(db.ProductCollection);
-    ProductBrands = database.GetCollection<ProductBrand>(db.ProductBrandsCollection);
-    Products  = database.GetCollection<Product>(db.ProductTypesCollection);
-
-    _ = ProductContextSeed.SeedDataAsync(Products);
-    _ = ProductBrandContextSeed.SeedDataAsync(ProductBrands);
-    _ = ProductTypeContextSeed.SeedDataAsync(ProductTypes);
+    ProductTypes = database.GetCollection<TypeDocument>(db.ProductTypesCollection);
+    ProductBrands = database.GetCollection<BrandDocument>(db.ProductBrandsCollection);
+    Products = database.GetCollection<ProductDocument>(db.ProductCollection);
   }
 }

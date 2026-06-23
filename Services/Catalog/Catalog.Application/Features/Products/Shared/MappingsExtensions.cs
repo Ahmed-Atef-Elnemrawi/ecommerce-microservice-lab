@@ -13,8 +13,16 @@ public static class MappingsExtensions
        Description = product.Description,
        Summary =  product.Summary,
        Price = product.Price,
-       Brand = product.Brand.MapToProductBrandDto(),
-       Type = product.Type.MapToProductTypeDto(),
+       Brand = new ProductBrandDto
+       {
+         Name = product.Brand.Name,
+         Id = product.Brand.Id,
+       },
+       Type = new ProductTypeDto
+       {
+         Id = product.Type.Id,
+         Name = product.Type.Name,
+       },
      };
    }
 

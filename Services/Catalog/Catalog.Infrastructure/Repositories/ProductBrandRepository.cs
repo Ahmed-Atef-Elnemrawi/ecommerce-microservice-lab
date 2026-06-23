@@ -1,23 +1,25 @@
-﻿using Catalog.Application.Common.Interfaces;
-using Catalog.Core.Entities;
+﻿using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data.Contexts;
+using Catalog.Infrastructure.Documents;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
 
-public class ProductBrandRepository(ICatalogDbContext context) : IProductBrandRepository
+public class ProductBrandRepository(CatalogContext context) : IProductBrandRepository
 {
-  private readonly ICatalogDbContext _context = context;
+  private readonly CatalogContext _context = context;
 
 
-  public async Task<IEnumerable<ProductBrand>> GetAllAsync(CancellationToken cancellationToken)
+  public async Task<IList<ProductBrand>> GetAllAsync(CancellationToken cancellationToken)
   {
-    return await _context.ProductBrands.Find(_ => true).ToListAsync(cancellationToken);
+    var brands = await _context.ProductBrands.Find(_ => true).ToListAsync(cancellationToken);
+    return brands.Select(p => BrandDocument.ToDomain(p)!).ToList();
   }
 
   public async Task<ProductBrand?> GetByIdAsync(string id, CancellationToken cancellationToken)
   {
-    return await _context.ProductBrands.Find(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+    var brand = await _context.ProductBrands.Find(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+    return BrandDocument.ToDomain(brand);
   }
 }

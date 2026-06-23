@@ -1,18 +1,18 @@
-﻿using Catalog.Application.Common.Interfaces;
+﻿using AutoMapper;
+using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Common.Models;
 using Catalog.Core.Entities;
+using Catalog.Core.Repositories;
 using MediatR;
 using MongoDB.Driver;
 
 namespace Catalog.Application.Features.Types.GetTypes;
 
-public class GetTypesQueryHandler(ICatalogDbContext dbContext)
+public class GetTypesQueryHandler(IProductTypeRepository typeRepository, IMapper mapper)
   : IRequestHandler<GetTypesQuery, Result<IList<TypeDto>>>
 {
-  // private readonly IProductTypeRepository _productTypeRepository = productTypeRepository;
-  // private readonly IMapper _mapper = mapper;
-
-  private readonly ICatalogDbContext _dbContext = dbContext;
+  private readonly IMapper _mapper = mapper;
+  private readonly IProductTypeRepository _repository = typeRepository;
 
   public async Task<Result<IList<TypeDto>>> Handle(GetTypesQuery request, CancellationToken cancellationToken)
   {
@@ -21,12 +21,7 @@ public class GetTypesQueryHandler(ICatalogDbContext dbContext)
 
     var filter = Builders<ProductType>.Filter.Empty;
 
-    var typesDto = await  _dbContext.ProductTypes.Find(filter).Project(p => new TypeDto
-    {
-      Id = p.Id,
-      Name = p.Name
-    }).ToListAsync(cancellationToken);
-
-    return Result<IList<TypeDto>>.Success(typesDto);
+    var types = await  _repository.GetAllAsync(cancellationToken);
+    return Result<IList<TypeDto>>.Success(_mapper.Map<IList<TypeDto>>(types));
   }
 }
