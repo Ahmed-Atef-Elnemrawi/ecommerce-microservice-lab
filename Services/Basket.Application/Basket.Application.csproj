@@ -11,7 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\ShoppingCart\Delete\" />
       <Folder Include="Features\ShoppingCart\Update\" />
       <Folder Include="ServiceRegistration\" />
     </ItemGroup>
