@@ -1,4 +1,5 @@
-﻿using Basket.Application.Common.Models.ResultModel;
+﻿using Basket.Application.Common.Dto;
+using Basket.Application.Common.Models.ResultModel;
 using MediatR;
 
 namespace Basket.Application.Features.ShoppingCart.GetByUserName;

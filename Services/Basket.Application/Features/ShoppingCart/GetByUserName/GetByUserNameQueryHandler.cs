@@ -1,4 +1,5 @@
-﻿using Basket.Application.Common.Models.ResultModel;
+﻿using Basket.Application.Common.Dto;
+using Basket.Application.Common.Models.ResultModel;
 using Basket.Core.Repositories;
 using MediatR;
 
@@ -15,9 +16,9 @@ public class GetByUserNameQueryHandler(IShoppingCartRepository cartRepository)
       return Result<CartDto?>.Failure(Error.Create("Cart.GetByUserName", "Cart not found", ErrorType.NotFound));
 
     var itemsDto = cart.Items.Select(p => new CartItemDto(
-      p.Quantity,
       p.ProductId,
       p.ProductName,
+      p.Quantity,
       p.Price,
       p.ImageUrl
     )).ToList().AsReadOnly();
