@@ -4,25 +4,72 @@
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
     ports:
-      - "8080:8080"
+      - "8080:8000"
+
     depends_on:
       - catalogDB
+
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DatabaseSettings__ConnectionString=mongodb://catalogDB:27017?readPreference=primary&ssl=false
-      - DatabaseSettings__DatabaseName=CatalogDb
-      - DatabaseSettings__ProductBrandsCollection=Brands
-      - DatabaseSettings__ProductTypesCollection=Types
-      - DatabaseSettings__ProductCollection=Products
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8000
+
+      DatabaseSettings__ConnectionString: mongodb://catalogDB:27017?readPreference=primary&ssl=false
+      DatabaseSettings__DatabaseName: CatalogDb
+      DatabaseSettings__ProductCollection: Products
+      DatabaseSettings__ProductBrandsCollection: Brands
+      DatabaseSettings__ProductTypesCollection: Types
+
   catalogDB:
     image: mongo
     container_name: catalogDB
+
     ports:
       - "27017:27017"
+
     volumes:
       - catalogData:/data/db
 
+  basket.api:
+    image: basket.api
+    build:
+      context: .
+      dockerfile: Services/Basket.Api/Dockerfile
+
+    ports:
+      - "8081:8000"
+
+    depends_on:
+      - basketDB
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8000
+
+      CacheSettings__ConnectionString: basketDB:6379
+
+  basketDB:
+    image: redis:alpine
+    container_name: basketDB
+
+    restart: always
+
+    ports:
+      - "6379:6379"
+        
+        
+        
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - "9443:9443"
+    volumes:
+      - portainer_data:/data
+    
+
 volumes:
   catalogData:
-
+  portainer_data:
