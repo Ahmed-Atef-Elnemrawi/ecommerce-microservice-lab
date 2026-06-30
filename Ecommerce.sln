@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{4A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Core", "Services\Discount\Discount.Core\Discount.Core.csproj", "{93D475B8-1E34-464B-BBCE-7CA053D7321E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Application", "Services\Discount\Discount.Application\Discount.Application.csproj", "{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{93D475B8-1E34-464B-BBCE-7CA053D7321E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D475B8-1E34-464B-BBCE-7CA053D7321E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D475B8-1E34-464B-BBCE-7CA053D7321E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{013999C2-14B9-4350-B4CF-199DF809BF6E} = {DD0AB5F3-58ED-4A6C-A283-90291D054B0A}
@@ -87,5 +93,6 @@ Global
 		{11D97F30-0BA8-4AD8-A800-F34B14AD04C3} = {8F191323-040E-430E-901B-9E61E15FFDAC}
 		{4A64832A-F818-4C3A-A699-25B9ED615583} = {DD0AB5F3-58ED-4A6C-A283-90291D054B0A}
 		{93D475B8-1E34-464B-BBCE-7CA053D7321E} = {4A64832A-F818-4C3A-A699-25B9ED615583}
+		{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3} = {4A64832A-F818-4C3A-A699-25B9ED615583}
 	EndGlobalSection
 EndGlobal
