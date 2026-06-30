@@ -7,18 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="12.1.1" />
-      <PackageReference Include="MediatR" Version="14.1.0" />
+        <PackageReference Include="FluentValidation" Version="12.1.1"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+        <PackageReference Include="MediatR" Version="14.1.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Behaviors\" />
-      <Folder Include="Common\Models\" />
-      <Folder Include="Features\" />
+        <Folder Include="Common\Models\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Discount.Core\Discount.Core.csproj" />
+        <ProjectReference Include="..\Discount.Core\Discount.Core.csproj"/>
     </ItemGroup>
 
 </Project>
