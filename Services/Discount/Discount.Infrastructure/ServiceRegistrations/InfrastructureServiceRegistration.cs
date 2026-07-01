@@ -20,6 +20,10 @@ public static class InfrastructureServiceRegistration
     services.AddSingleton<DbConnectionFactory>();
     services.AddScoped<IDiscountRepository, DiscountRepository>();
     
+    //Migrations
+    var dbSettings = configuration.GetSection(DbSettings.SectionName).Get<DbSettings>();
+    MigrationRunner.Run(dbSettings!.ConnectionString);
+    
     return services;
   }
 }
