@@ -17,6 +17,8 @@ public static class InfrastructureServiceRegistration
       .Bind(configuration.GetSection(DbSettings.SectionName))
       .ValidateOnStart();
     
+    services.AddSingleton<DbConnectionFactory>();
+    
     return services;
   }
 }
