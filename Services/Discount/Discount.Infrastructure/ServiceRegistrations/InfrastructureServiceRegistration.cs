@@ -18,6 +18,7 @@ public static class InfrastructureServiceRegistration
       .ValidateOnStart();
     
     services.AddSingleton<DbConnectionFactory>();
+    services.AddScoped<IDiscountRepository, DiscountRepository>();
     
     return services;
   }
