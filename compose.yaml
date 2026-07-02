@@ -35,7 +35,7 @@
     image: basket.api
     build:
       context: .
-      dockerfile: Services/Basket.Api/Dockerfile
+      dockerfile: Services/Basket/Basket.Api/Dockerfile
 
     ports:
       - "8081:8000"
@@ -59,6 +59,54 @@
       - "6379:6379"
         
         
+  discount.grpcservice:
+    image: discount.grpcservice
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.GrpcService/Dockerfile
+    container_name: discount.service
+    depends_on:
+      discountDb:
+        condition: service_healthy
+    ports:
+      - "8002:8000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8000
+      NpgsqlSettings__ConnectionString: Host=discountDb;Port=5432;Database=DiscountDb;Username=admin;Password=admin@1
+  
+  
+  discountDb:
+    image: postgres:16
+    container_name: discount-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin@1
+      POSTGRES_DB: DiscountDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d DiscountDb" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: discount-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin@1
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - discountDb
         
   portainer:
     image: portainer/portainer-ce
@@ -73,3 +121,5 @@
 volumes:
   catalogData:
   portainer_data:
+  postgres_data:
+  pgadmin_data:
