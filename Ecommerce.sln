@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Application", "Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Infrastructure", "Services\Discount\Discount.Infrastructure\Discount.Infrastructure.csproj", "{34DD2ECA-8C95-4178-8D18-52E5455287D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.GrpcService", "Services\Discount\Discount.GrpcService\Discount.GrpcService.csproj", "{A60B6C6F-ED5A-4ACD-A95F-69F77AEE70DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{34DD2ECA-8C95-4178-8D18-52E5455287D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34DD2ECA-8C95-4178-8D18-52E5455287D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34DD2ECA-8C95-4178-8D18-52E5455287D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A60B6C6F-ED5A-4ACD-A95F-69F77AEE70DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A60B6C6F-ED5A-4ACD-A95F-69F77AEE70DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A60B6C6F-ED5A-4ACD-A95F-69F77AEE70DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A60B6C6F-ED5A-4ACD-A95F-69F77AEE70DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{013999C2-14B9-4350-B4CF-199DF809BF6E} = {DD0AB5F3-58ED-4A6C-A283-90291D054B0A}
@@ -101,5 +107,6 @@ Global
 		{93D475B8-1E34-464B-BBCE-7CA053D7321E} = {4A64832A-F818-4C3A-A699-25B9ED615583}
 		{9FA843CA-4F9F-4CDE-B8C8-47A6FEF867C3} = {4A64832A-F818-4C3A-A699-25B9ED615583}
 		{34DD2ECA-8C95-4178-8D18-52E5455287D3} = {4A64832A-F818-4C3A-A699-25B9ED615583}
+		{A60B6C6F-ED5A-4ACD-A95F-69F77AEE70DE} = {4A64832A-F818-4C3A-A699-25B9ED615583}
 	EndGlobalSection
 EndGlobal
