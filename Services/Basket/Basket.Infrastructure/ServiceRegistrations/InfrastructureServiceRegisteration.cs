@@ -1,5 +1,7 @@
-﻿using Basket.Core.Repositories;
+﻿using Basket.Application.ExternalServices.Discount;
+using Basket.Core.Repositories;
 using Basket.Infrastructure.Configurations;
+using Basket.Infrastructure.ExternalServices.Discount;
 using Basket.Infrastructure.Repositories;
 using Discount.Grpc.Protos;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +40,7 @@ public static class InfrastructureServiceRegistration
     });
 
     services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+    services.AddScoped<IDiscountService, DiscountService>();
 
     return services;
   }
