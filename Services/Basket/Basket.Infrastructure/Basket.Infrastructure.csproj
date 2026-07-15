@@ -11,9 +11,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Grpc.AspNetCore" Version="2.80.0" />
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.9" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.9" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Protobuf 
+            Include="..\..\..\Services\Discount\Discount.GrpcService\Protos\discount.proto"
+            Link="ExternalServices\Discount\Protos\discount.proto"
+            GrpcServices="Client"
+        />
     </ItemGroup>
 
 </Project>
