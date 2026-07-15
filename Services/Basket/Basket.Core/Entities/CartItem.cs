@@ -7,7 +7,10 @@ public sealed class CartItem
   public string ProductId { get; private set; }
   public string ProductName { get; private set; }
   public string ImageUrl { get; private set; }
+  public decimal Discount { get; private set; }
 
+  public decimal PriceAfterDiscount => Math.Max(0, Price - Discount);
+  
   private CartItem(string productId, string productName, int quantity, decimal price, string imageUrl)
   {
     Quantity = quantity;
@@ -15,6 +18,7 @@ public sealed class CartItem
     ProductId = productId;
     ProductName = productName;
     ImageUrl = imageUrl;
+    Discount = 0;
   }
 
   internal static CartItem Create(string productId, string productName, int quantity, decimal price, string imageUrl)
@@ -44,4 +48,10 @@ public sealed class CartItem
     Quantity -= quantity;
   }
   
+
+  internal void ApplyDiscount(decimal discountAmount)
+  {
+    ArgumentOutOfRangeException.ThrowIfNegative(discountAmount);
+    Discount = discountAmount;
+  }
 }

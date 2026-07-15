@@ -12,9 +12,10 @@ public static class ShoppingCartMappings
         p.ProductName,
         p.Quantity,
         p.Price,
-        p.ImageUrl
+        p.ImageUrl,
+        p.PriceAfterDiscount
       )).ToList().AsReadOnly();
     
-    return new CartDto(cart.UserName,items);
+    return new CartDto(cart.UserName,items, cart.TotalPrice);
   }
 }

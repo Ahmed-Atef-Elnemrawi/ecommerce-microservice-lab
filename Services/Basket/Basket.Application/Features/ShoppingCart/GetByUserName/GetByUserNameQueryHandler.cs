@@ -20,9 +20,10 @@ public class GetByUserNameQueryHandler(IShoppingCartRepository cartRepository)
       p.ProductName,
       p.Quantity,
       p.Price,
-      p.ImageUrl
+      p.ImageUrl,
+      p.PriceAfterDiscount
     )).ToList().AsReadOnly();
 
-    return  Result<CartDto?>.Success(new CartDto(request.UserName, itemsDto));
+    return  Result<CartDto?>.Success(new CartDto(request.UserName, itemsDto, cart.TotalPrice));
   }
 }

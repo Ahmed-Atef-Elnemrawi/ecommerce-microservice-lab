@@ -5,4 +5,4 @@ public sealed record CartItemDto(
   string ProductName,
   int Quantity,
   decimal Price,
-  string ImageUrl);
+  string ImageUrl, decimal PriceAfterDiscount);

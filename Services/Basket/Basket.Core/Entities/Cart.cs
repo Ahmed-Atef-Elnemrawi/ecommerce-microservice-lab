@@ -6,6 +6,7 @@ public sealed class Cart
 
   public string UserName { get; private set; } = null!;
   public IReadOnlyCollection<CartItem> Items => _items;
+  public decimal TotalPrice => _items.Sum(p => p.PriceAfterDiscount * p.Quantity);
 
   private Cart()
   {
@@ -58,5 +59,15 @@ public sealed class Cart
   public void Clear()
   {
     _items.Clear();
+  }
+
+  public void ApplyDiscount(string productId, int discountAmount)
+  {
+    var item = _items.SingleOrDefault(x => x.ProductId == productId);
+    
+    if (item is null)
+       throw new InvalidOperationException("Item not found");
+    
+    item.ApplyDiscount(discountAmount);
   }
 }
