@@ -10,7 +10,11 @@ service DiscountProtoService {
 }
 
 message GetRequestModel {
-  int32 id = 1;
+  // Deprecated: do not modify or reuse (field numbers are part of the contract)
+  int32 id = 1 [deprecated = true];
+
+  // Replacement for id using a stable, external identifier
+  string productId = 2;
 }
 
 message CouponModel {
