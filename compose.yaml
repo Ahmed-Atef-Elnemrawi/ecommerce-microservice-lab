@@ -48,6 +48,7 @@
       ASPNETCORE_URLS: http://+:8000
 
       CacheSettings__ConnectionString: basketDB:6379
+      DiscountGrpcSettings__ServiceUrl: http://discount.grpcservice:8000
 
   basketDB:
     image: redis:alpine
