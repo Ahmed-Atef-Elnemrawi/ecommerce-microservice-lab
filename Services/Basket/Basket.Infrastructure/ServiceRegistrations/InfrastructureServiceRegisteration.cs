@@ -22,7 +22,7 @@ public static class InfrastructureServiceRegistration
     
     services.AddOptions<DiscountGrpcSettings>()
       .BindConfiguration(DiscountGrpcSettings.SectionName)
-      .Validate(x => string.IsNullOrWhiteSpace(x.ServiceUrl),
+      .Validate(x => !string.IsNullOrWhiteSpace(x.ServiceUrl),
         "Discount ServiceUrl must be provided")
       .ValidateOnStart();
     
