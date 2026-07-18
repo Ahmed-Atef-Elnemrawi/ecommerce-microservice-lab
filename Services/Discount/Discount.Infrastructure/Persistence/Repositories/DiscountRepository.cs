@@ -13,8 +13,7 @@ public sealed class DiscountRepository(DbConnectionFactory connectionFactory) : 
     return await connection.QuerySingleOrDefaultAsync<Coupon>(
       new CommandDefinition(
         """
-            SELECT * FROM Coupons
-            WHERE Id = @Id
+            SELECT * FROM coupons WHERE id = @Id;
         """,
         new { Id = id },
         cancellationToken: cancellationToken));
@@ -27,8 +26,7 @@ public sealed class DiscountRepository(DbConnectionFactory connectionFactory) : 
     return await connection.QuerySingleOrDefaultAsync<Coupon>(
       new CommandDefinition(
         """
-            SELECT * FROM Coupons
-            WHERE ProductId = @ProductId
+           SELECT * FROM coupons WHERE productid = @ProductId;
         """,
         new { ProductId = productId },
         cancellationToken: cancellationToken));
@@ -41,8 +39,8 @@ public sealed class DiscountRepository(DbConnectionFactory connectionFactory) : 
     var affected = await connection.ExecuteAsync(
       new CommandDefinition(
         """
-            INSERT INTO "Coupon" ("ProductId", "Description", "Amount")
-            VALUES (@ProductId, @Description, @Amount)
+           INSERT INTO coupons (productid, description, amount)
+           VALUES (@ProductId, @Description, @Amount);
             ON CONFLICT ("ProductId") DO NOTHING;
         """,
         new { coupon.ProductId, coupon.Description, coupon.Amount },
@@ -58,12 +56,12 @@ public sealed class DiscountRepository(DbConnectionFactory connectionFactory) : 
     var affected = await connection.ExecuteAsync(
       new CommandDefinition(
         """
-        UPDATE "Coupons"
+        UPDATE coupons
         SET 
-            "Description" = @Description,
-            "Amount" = @Amount,
-            "Version" = "Version" + 1
-        WHERE "Id" = @Id AND "Version" = @Version;
+            description = @Description,
+            amount = @Amount,
+            version = version + 1
+        WHERE id = @Id AND version = @Version;
         """,
         new { coupon.Id, coupon.Description, coupon.Amount, coupon.Version },
         cancellationToken: cancellationToken));
@@ -78,8 +76,8 @@ public sealed class DiscountRepository(DbConnectionFactory connectionFactory) : 
     var affected = await connection.ExecuteAsync(
       new CommandDefinition(
         """
-            DELETE FROM Coupons
-            WHERE Id = @Id
+            DELETE FROM coupons
+            WHERE id = @Id;
         """,
         new { Id = id },
         cancellationToken: cancellationToken));
