@@ -1,8 +1,14 @@
 ﻿using Discount.Application.ServiceRegistrations;
 using Discount.GrpcService.Services;
 using Discount.Infrastructure.ServiceRegistrations;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+  options.ListenAnyIP(8000, o => o.Protocols = HttpProtocols.Http2);
+});
 
 // Add services to the container.
 builder.Services.AddGrpc();
