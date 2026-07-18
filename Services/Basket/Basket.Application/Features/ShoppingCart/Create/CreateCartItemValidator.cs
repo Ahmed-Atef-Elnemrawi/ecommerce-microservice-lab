@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Basket.Application.Features.ShoppingCart.Create;
 
-public sealed class CreateCartItemValidator : AbstractValidator<CartItemDto>
+public sealed class CreateCartItemValidator : AbstractValidator<CreateCartItemDto>
 {
   public CreateCartItemValidator()
   {
