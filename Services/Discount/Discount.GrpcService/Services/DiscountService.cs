@@ -14,7 +14,7 @@ public class DiscountService(ISender sender) : DiscountProtoService.DiscountProt
 {
   public override async Task<CouponModel> GetDiscount(GetRequestModel request, ServerCallContext context)
   {
-    var query = new GetDiscountQuery(request.Id);
+    var query = new GetDiscountQuery(request.ProductId);
     var result = await sender.Send(query);
 
     if (result is { IsSuccess: false, Error: not null })
