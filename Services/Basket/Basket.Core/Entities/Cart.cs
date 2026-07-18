@@ -1,4 +1,6 @@
-﻿namespace Basket.Core.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Basket.Core.Entities;
 
 public sealed class Cart
 {
@@ -8,8 +10,11 @@ public sealed class Cart
   public IReadOnlyCollection<CartItem> Items => _items;
   public decimal TotalPrice => _items.Sum(p => p.PriceAfterDiscount * p.Quantity);
 
-  private Cart()
+  [JsonConstructor]
+  public Cart(string userName, List<CartItem> items)
   {
+    UserName = userName;
+    _items = items ?? [];
   }
 
   private Cart(string userName)
