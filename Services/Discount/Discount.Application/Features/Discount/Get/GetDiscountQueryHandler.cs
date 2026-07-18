@@ -11,7 +11,7 @@ public sealed class GetDiscountQueryHandler(IDiscountRepository discountReposito
 {
   public async Task<Result<CouponDto>> Handle(GetDiscountQuery request, CancellationToken cancellationToken)
   {
-    var discount = await discountRepository.GetAsync(request.Id, cancellationToken);
+    var discount = await discountRepository.GetByProductIdAsync(request.ProductId, cancellationToken);
 
     if (discount == null)
       return Result<CouponDto>.Failure("Coupon.NotFound", "Coupon not found", ErrorType.NotFound);

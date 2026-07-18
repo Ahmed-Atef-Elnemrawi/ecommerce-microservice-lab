@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Discount.Application.Features.Discount.Get;
 
-public sealed record GetDiscountQuery(int Id) : IRequest<Result<CouponDto>>;
+public sealed record GetDiscountQuery(string ProductId) : IRequest<Result<CouponDto>>;
