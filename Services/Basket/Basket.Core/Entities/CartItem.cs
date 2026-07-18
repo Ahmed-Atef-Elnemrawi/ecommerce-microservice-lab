@@ -4,12 +4,17 @@ public sealed class CartItem
 {
   public int Quantity { get; private set; }
   public decimal Price { get; private set; }
-  public string ProductId { get; private set; }
-  public string ProductName { get; private set; }
-  public string ImageUrl { get; private set; }
+  public string ProductId { get; private set; } = null!;
+  public string ProductName { get; private set; } = null!;
+  public string ImageUrl { get; private set; } = null!;
   public decimal Discount { get; private set; }
 
   public decimal PriceAfterDiscount => Math.Max(0, Price - Discount);
+
+  private CartItem()
+  {
+    
+  }
   
   private CartItem(string productId, string productName, int quantity, decimal price, string imageUrl)
   {
