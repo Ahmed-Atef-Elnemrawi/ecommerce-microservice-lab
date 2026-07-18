@@ -13,8 +13,10 @@ public sealed class CreateCartCommandHandler(IShoppingCartRepository cartReposit
 {
   public async Task<Result<CartDto>> Handle(CreateCartCommand request, CancellationToken cancellationToken)
   {
-    var cart = await cartRepository.GetByUserNameAsync(request.UserName, cancellationToken) ??
-               Cart.Create(request.UserName);
+    var cart = await cartRepository.GetByUserNameAsync(request.UserName, cancellationToken);
+    
+    if (cart is null)
+     cart = Cart.Create(request.UserName);
 
     cart.Clear();
 
