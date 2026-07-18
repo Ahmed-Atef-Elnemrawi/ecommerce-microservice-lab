@@ -29,6 +29,7 @@ public class BasketController(ISender sender) : ControllerBase
   public async Task<ActionResult<Result<CartDto>>> CreateCart([FromRoute] string username,
     [FromBody] CreateCartCommand command)
   {
+    command = command with { UserName = username };
     var result = await sender.Send(command);
     return result.IsSuccess ? Ok(result) : BadRequest(result);
   }
