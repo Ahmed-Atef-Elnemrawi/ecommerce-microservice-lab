@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Ordering.Application.Common.interfaces;
 using Ordering.Application.Common.Mappings;
 using Ordering.Application.Common.Models.ResultModel;
 using Ordering.Application.Contracts.Ordering;
@@ -8,7 +9,7 @@ using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Application.Features.Ordering.Create;
 
-public sealed class CreateOrderCommandHandler(IOrderRepository orderRepository)
+public sealed class CreateOrderCommandHandler(IOrderRepository orderRepository, IPersistenceContext persistenceContext)
   : IRequestHandler<CreateOrderCommand, Result<OrderDto>>
 {
   public async Task<Result<OrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -43,7 +44,8 @@ public sealed class CreateOrderCommandHandler(IOrderRepository orderRepository)
       paymentInfo
     );
 
-    var createdOrder = await orderRepository.CreateAsync(order, cancellationToken);
+    var createdOrder = orderRepository.Create(order);
+    await persistenceContext.SaveChangesAsync(cancellationToken);
 
     return Result<OrderDto>.Success(createdOrder.MapToOrderDto());
   }
