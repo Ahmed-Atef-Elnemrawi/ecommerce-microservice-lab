@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Ordering.Application.Common.interfaces;
 using Ordering.Application.Common.Models.ResultModel;
 using Ordering.Domain.Repositories;
 
 namespace Ordering.Application.Features.Ordering.Delete;
 
-public sealed class DeleteOrderCommandHandler(IOrderRepository orderRepository)
+public sealed class DeleteOrderCommandHandler(IOrderRepository orderRepository, IPersistenceContext persistenceContext)
   : IRequestHandler<DeleteOrderCommand, Result<Unit>>
 {
   public async Task<Result<Unit>> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
@@ -18,7 +19,9 @@ public sealed class DeleteOrderCommandHandler(IOrderRepository orderRepository)
         ErrorType.NotFound
       );
     
-    await  orderRepository.DeleteAsync(order, cancellationToken);
+    orderRepository.Delete(order);
+    await persistenceContext.SaveChangesAsync(cancellationToken);
+    
     return Result<Unit>.Success(Unit.Value);
   }
 }

@@ -8,7 +8,7 @@ using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Application.Features.Ordering.Update;
 
-public sealed class UpdateOrderCommandHandler(IOrderRepository orderRepository)
+public sealed class UpdateOrderCommandHandler(IOrderRepository orderRepository, IPersistenceContext persistenceContext)
   : IRequestHandler<UpdateOrderCommand, Result<OrderDto>>
 {
   public async Task<Result<OrderDto>> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
