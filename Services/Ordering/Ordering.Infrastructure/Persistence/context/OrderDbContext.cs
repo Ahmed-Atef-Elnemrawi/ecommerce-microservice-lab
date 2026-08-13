@@ -10,6 +10,16 @@ public sealed class OrderDbContext(DbContextOptions<OrderDbContext> options)
 {
   public DbSet<Order> Orders => Set<Order>();
 
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+    modelBuilder.Entity<Order>(entity =>
+    {
+      entity.OwnsOne(order => order.CustomerInfo);
+      entity.OwnsOne(order => order.Address);
+      entity.OwnsOne(order => order.PaymentInfo);
+    });
+  }
+
 // TODO: Replace hard-coded audit user with the current authenticated user.
   public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
   {
