@@ -22,7 +22,11 @@ public static class InfrastructureServiceRegistrations
 
     services.AddDbContext<OrderDbContext>(options =>
     {
-      options.UseSqlServer(configuration.GetConnectionString(OrderDbSettings.SectionName));
+      var settings = configuration
+        .GetSection(OrderDbSettings.SectionName)
+        .Get<OrderDbSettings>();
+      
+      options.UseSqlServer(settings!.ConnectionString);
     });
     
     services.AddScoped<IPersistenceContext>(sp => sp.GetRequiredService<OrderDbContext>());
