@@ -94,6 +94,56 @@
       interval: 5s
       timeout: 5s
       retries: 5
+      
+  ordering.api:
+    image: ordering.api
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
+    container_name: ordering-api
+
+    ports:
+      - "8083:8000"
+
+    depends_on:
+      orderDb:
+        condition: service_healthy
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      ASPNETCORE_URLS: http://+:8000
+
+      OrderingDbSettings__ConnectionString: "Server=orderDb,1433;Database=OrderDb;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+
+  orderDb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+    container_name: order_sqlserver
+
+    restart: always
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+
+    ports:
+      - "1433:1433"
+
+    volumes:
+      - ordering_data:/var/opt/mssql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '${MSSQL_SA_PASSWORD}' -C -Q 'SELECT 1' || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    
   
   pgadmin:
     image: dpage/pgadmin4
@@ -124,3 +174,4 @@ volumes:
   portainer_data:
   postgres_data:
   pgadmin_data:
+  ordering_data:
