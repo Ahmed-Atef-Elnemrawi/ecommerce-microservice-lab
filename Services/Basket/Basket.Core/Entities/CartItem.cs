@@ -1,4 +1,6 @@
-﻿namespace Basket.Core.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Basket.Core.Entities;
 
 public sealed class CartItem
 {
@@ -16,14 +18,15 @@ public sealed class CartItem
     
   }
   
-  private CartItem(string productId, string productName, int quantity, decimal price, string imageUrl)
+  [JsonConstructor]
+  private CartItem(string productId, string productName, int quantity, decimal price, string imageUrl, decimal discount)
   {
-    Quantity = quantity;
-    Price = price;
     ProductId = productId;
     ProductName = productName;
+    Quantity = quantity;
+    Price = price;
     ImageUrl = imageUrl;
-    Discount = 0;
+    Discount = discount;
   }
 
   internal static CartItem Create(string productId, string productName, int quantity, decimal price, string imageUrl)
@@ -34,7 +37,7 @@ public sealed class CartItem
     ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
     ArgumentException.ThrowIfNullOrWhiteSpace(imageUrl);
 
-    return new CartItem(productId, productName, quantity, price, imageUrl);
+    return new CartItem(productId, productName, quantity, price, imageUrl, discount: 0);
   }
 
   internal void IncreaseQuantity(int quantity)

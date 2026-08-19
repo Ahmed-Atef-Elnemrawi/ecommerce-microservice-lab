@@ -6,15 +6,15 @@ public sealed class Cart
 {
   private readonly List<CartItem> _items = [];
 
-  public string UserName { get; private set; } = null!;
+  public string UserName { get; private set; }
   public IReadOnlyCollection<CartItem> Items => _items;
   public decimal TotalPrice => _items.Sum(p => p.PriceAfterDiscount * p.Quantity);
 
   [JsonConstructor]
-  public Cart(string userName, List<CartItem> items)
+  public Cart(string userName, IReadOnlyCollection<CartItem> items)
   {
     UserName = userName;
-    _items = items ?? [];
+    _items = items?.ToList() ?? [];
   }
 
   private Cart(string userName)
