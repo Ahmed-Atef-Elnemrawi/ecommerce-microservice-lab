@@ -1,9 +1,11 @@
-﻿using Basket.Application.ExternalServices.Discount;
+﻿using Basket.Application.Common.Interfaces;
+using Basket.Application.ExternalServices.Discount;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Configurations;
 using Basket.Infrastructure.ExternalServices.Discount;
 using Basket.Infrastructure.Repositories;
 using Discount.Grpc.Protos;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -18,6 +20,11 @@ public static class InfrastructureServiceRegistration
     
     services.AddOptions<CacheSettings>()
       .BindConfiguration(CacheSettings.SectionName)
+      .ValidateDataAnnotations()
+      .ValidateOnStart();
+    
+    services.AddOptions<EventBusSettings>()
+      .BindConfiguration(EventBusSettings.Name)
       .ValidateOnStart();
     
     services.AddOptions<DiscountGrpcSettings>()
@@ -39,6 +46,17 @@ public static class InfrastructureServiceRegistration
       options.Address = new Uri(discountGrpcSettings.ServiceUrl);
     });
 
+    services.AddMassTransit(options =>
+    {
+      options.UsingRabbitMq((context, cfg) =>
+      {
+        var settings = context.GetRequiredService<IOptions<EventBusSettings>>().Value;
+        cfg.Host(settings.HostAddress);
+      });
+    });
+
+    services.AddScoped<IEventBus, Messaging.EventBus>(); 
+    
     services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
     services.AddScoped<IDiscountService, DiscountService>();
 
