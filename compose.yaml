@@ -42,6 +42,7 @@
 
     depends_on:
       - basketDB
+      - rabbitmq
 
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -49,6 +50,7 @@
 
       CacheSettings__ConnectionString: basketDB:6379
       DiscountGrpcSettings__ServiceUrl: http://discount.grpcservice:8000
+      EventBusSettings__HostAddress: "amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}"
 
   basketDB:
     image: redis:alpine
@@ -97,6 +99,7 @@
       
   ordering.api:
     image: ordering.api
+
     build:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
@@ -109,13 +112,16 @@
     depends_on:
       orderDb:
         condition: service_healthy
+      rabbitmq:
+        condition: service_started
 
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       ASPNETCORE_URLS: http://+:8000
 
       OrderingDbSettings__ConnectionString: "Server=orderDb,1433;Database=OrderDb;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
-
+      EventBusSettings__HostAddress: "amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}"
+      
   orderDb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
@@ -144,6 +150,18 @@
       retries: 10
       start_period: 30s
     
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitMq
+    restart: always
+  
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
   
   pgadmin:
     image: dpage/pgadmin4
